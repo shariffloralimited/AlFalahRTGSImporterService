@@ -359,26 +359,64 @@ namespace RTGSImporter
                 }
             }
 
-            if (pacs.IntrBkSttlmCcy != "BDT")
-            {
-                if (doc.GetElementsByTagName("InstrInf").Count >= 1)
-                    pacs.InstrInfBillNumber = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
-                if (doc.GetElementsByTagName("InstrInf").Count >= 2)
-                    pacs.InstrInfLCNumber = doc.GetElementsByTagName("InstrInf").Item(1).InnerText;
-                if (doc.GetElementsByTagName("InstrInf").Count >= 3)
-                    pacs.InstrInfPartyName = doc.GetElementsByTagName("InstrInf").Item(2).InnerText;
-                if (doc.GetElementsByTagName("InstrInf").Count >= 4)
-                    pacs.InstrInfBranchID = doc.GetElementsByTagName("InstrInf").Item(3).InnerText;
-                if (doc.GetElementsByTagName("InstrInf").Count >= 5)
-                    pacs.InstrInfOthersInformation = doc.GetElementsByTagName("InstrInf").Item(4).InnerText;
-                if (doc.GetElementsByTagName("InstrInf").Count >= 6)
-                    pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(5).InnerText;
-            }
-            else if (pacs.IntrBkSttlmCcy == "BDT" && doc.GetElementsByTagName("InstrInf").Count > 0)
-            {
-                pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
-            }
+            //if (doc.GetElementsByTagName("InstrInf").Count > 0)
+            //{
+            //    pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
 
+            //}
+
+            //if (pacs.IntrBkSttlmCcy == "BDT")
+            //{
+            //    if (doc.GetElementsByTagName("InstrInf").Count > 0)
+            //    {
+            //        pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
+
+            //    }
+            //}
+
+            //if (pacs.IntrBkSttlmCcy != "BDT")
+            //{
+            //    if (doc.GetElementsByTagName("InstrInf").Count >= 2)
+            //    {
+
+            //        pacs.InstrInfBillNumber = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
+            //        pacs.InstrInfLCNumber = doc.GetElementsByTagName("InstrInf").Item(1).InnerText;
+            //        pacs.InstrInfPartyName = doc.GetElementsByTagName("InstrInf").Item(2).InnerText;
+            //        pacs.InstrInfBranchID = doc.GetElementsByTagName("InstrInf").Item(3).InnerText;
+            //        pacs.InstrInfOthersInformation = doc.GetElementsByTagName("InstrInf").Item(4).InnerText;
+            //        pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(5).InnerText;
+            //        //pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(5).InnerText;
+            //    }
+                
+            //}
+            //if (pacs.IntrBkSttlmCcy == "BDT")
+            //{
+                if (doc.GetElementsByTagName("InstrInf").Count == 1)
+                {
+                    pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
+
+                }
+            //}
+
+            //if (pacs.IntrBkSttlmCcy != "BDT")
+            //{
+                else 
+                {
+                    string[] InstrInf = new string[6];
+                    for (int k = 0; k < doc.GetElementsByTagName("InstrInf").Count;k++ )
+                    {
+                        InstrInf[k] = doc.GetElementsByTagName("InstrInf").Item(k).InnerText;
+                    }
+                    pacs.InstrInfBillNumber = String.IsNullOrEmpty(InstrInf[0]) ? "" : InstrInf[0];
+                    pacs.InstrInfLCNumber = String.IsNullOrEmpty(InstrInf[1]) ? "" : InstrInf[1];
+                    pacs.InstrInfPartyName = String.IsNullOrEmpty(InstrInf[2]) ? "" : InstrInf[2];
+                    pacs.InstrInfBranchID = String.IsNullOrEmpty(InstrInf[3]) ? "" : InstrInf[3];
+                    pacs.InstrInfOthersInformation = String.IsNullOrEmpty(InstrInf[4]) ? "" : InstrInf[4];
+                    pacs.InstrInf = String.IsNullOrEmpty(InstrInf[5]) ? "" : InstrInf[5];
+                    //pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(5).InnerText;
+                }
+
+            //}
             return pacs;
         }
 
