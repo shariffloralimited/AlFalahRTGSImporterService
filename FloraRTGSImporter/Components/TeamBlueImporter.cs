@@ -131,6 +131,11 @@ namespace RTGSImporter
             pacs.CdtrAcctId = "";
             pacs.CdtrAcctTp = "";
             pacs.InstrInf = "";
+            pacs.InstrInfBillNumber = "";
+            pacs.InstrInfLCNumber = "";
+            pacs.InstrInfPartyName = "";
+            pacs.InstrInfBranchID = "";
+            pacs.InstrInfOthersInformation = "";
 
             //--------------------------------------
             if (doc.GetElementsByTagName("LclInstrm").Count > 0)
@@ -354,7 +359,22 @@ namespace RTGSImporter
                 }
             }
 
-            if (doc.GetElementsByTagName("InstrInf").Count > 0)
+            if (pacs.IntrBkSttlmCcy != "BDT")
+            {
+                if (doc.GetElementsByTagName("InstrInf").Count >= 1)
+                    pacs.InstrInfBillNumber = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
+                if (doc.GetElementsByTagName("InstrInf").Count >= 2)
+                    pacs.InstrInfLCNumber = doc.GetElementsByTagName("InstrInf").Item(1).InnerText;
+                if (doc.GetElementsByTagName("InstrInf").Count >= 3)
+                    pacs.InstrInfPartyName = doc.GetElementsByTagName("InstrInf").Item(2).InnerText;
+                if (doc.GetElementsByTagName("InstrInf").Count >= 4)
+                    pacs.InstrInfBranchID = doc.GetElementsByTagName("InstrInf").Item(3).InnerText;
+                if (doc.GetElementsByTagName("InstrInf").Count >= 5)
+                    pacs.InstrInfOthersInformation = doc.GetElementsByTagName("InstrInf").Item(4).InnerText;
+                if (doc.GetElementsByTagName("InstrInf").Count >= 6)
+                    pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(5).InnerText;
+            }
+            else if (pacs.IntrBkSttlmCcy == "BDT" && doc.GetElementsByTagName("InstrInf").Count > 0)
             {
                 pacs.InstrInf = doc.GetElementsByTagName("InstrInf").Item(0).InnerText;
             }
